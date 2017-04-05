@@ -1,0 +1,128 @@
+*{padding: 0; margin: 0; list-style: none; }
+
+.left{
+    float: left;
+}
+
+.right{
+    float: right;
+}
+.clear{
+    clear:both;
+}
+
+a{
+    text-decoration: none;
+    color: #000;
+    font-size: 0px;
+    /*line-height: 0px;*/
+}
+/*
+    这里出现一个bug,就是a标签里面包含img标签，出现a标签的高度高于img标签好几个px.
+因为a元素下有一个匿名文本，这个文本外有一个匿名行级盒子，它有的默认vertical-align是baseline的
+    而且往往因为上文line-height的影响，使它有个line-height，从而使其有了高度,
+因为baseline对齐的原因，这个匿名盒子就会下沉，往下撑开一些距离，所以把a撑高.
+*/
+    /*解决办法一是消除掉匿名盒子的高度，也就是给a设置line-height:0或font-size:0;*/
+    /*解决办法二是给两者vertical-align:top，让其top对齐，而不是baseline对齐*/
+    /*解决办法三是给img以display:block，让它和匿名行级盒子不在一个布局上下文中，也就不存在行级盒的对齐问题*/
+
+
+/*大容器,包含主要内容.*/
+.contains{
+    border: none;
+    margin-top: 100px;
+}
+
+/*主内容区域box*/
+.warp{
+    width: 550px;
+    height: 300px;
+    margin: 100px auto;
+    border: 4px solid #000;
+    overflow: hidden;
+    position: relative;
+    /*
+             实现原理是一排图片.从第一章开始顺序向右执行轮播;
+    设计思维: 下面li的浮动的图片在ul(设置好容器大小)里面并排从左到右并排;
+             按照第一句话的思维, 用清除浮动时候溢出的多余3张图片;
+    */
+}
+
+
+/*内容区-img元素对象*/
+/*给img下的每个li设置浮动,但是由于主容器设置了宽度正好是一个图片大小.所以图片不会一排显示*/
+.banner .img>li{
+    float: left;
+    font-size: 0;
+}
+
+/*给包含图片的ul设置大一点的宽度,这样图片就会居中并向左偏移(浮动)*/
+.banner .img{
+    width: 2200px;
+    /* JS逻辑: */
+    position: absolute; left: 0; top: 0;
+    /*img也是父元素warp元素下的,根据父元素做相对定位,设定需要控制的初始值;*/
+
+}
+
+/*内容区-圆形按钮部分*/
+.banner .number{
+    position: absolute; /*相对于warp父级的定位;*/
+    width: 100%;
+    bottom: 10px;
+    text-align: center;  /*父级元素设置文字居中,那么li就会变到中间去了*/
+    font-size: 0;   /* 清除display:inline-block的空格 */
+}
+.banner .number>li{
+    width: 25px;
+    height: 25px;
+    display: inline-block;/*把li变成一行显示的块级元素*//*display: inline-block有一个默认的空格间隙,父元素设置*/
+    background: #c3c3c3;
+    margin: 0 5px;
+    border-radius: 50%;  /*实现圆形边框*/
+    opacity: 0.7;   /* 设置元素透明度 css3新样式 */
+    cursor: pointer;
+}
+/* 给圆形按钮li设置样式.用display:inline-block来替代float */
+
+.banner .number>li.on{
+    background: #ff3c3c;
+    opacity: 0.8;
+    /*需要用js添加的动态设置的内容*/
+}
+
+
+/* 内容区-左右按钮部分 */
+.btn{
+    width: 60px;
+    height: 80px;
+    background: rgba(0,0,0,0.4);    /*设置背景色透明度CSS3新特性*/
+    position: absolute;
+    top: 40%;
+    cursor: pointer;
+    color: #c3c3c3;
+    line-height: 80px;
+    font-size: 80px;
+    text-align: center;
+    font-family: "宋体";
+}
+/*左右按钮共同的包裹样式;*/
+
+.banner .btn_l{
+    left: 10px;
+}
+/*在应用了btn样式的前提下设置距离左边的按钮位置;*/
+.banner .btn_r{
+    right: 10px;
+}
+/*在应用了btn样式的前提下设置距离右边的按钮位置;*/
+
+
+
+
+
+
+
+
+
